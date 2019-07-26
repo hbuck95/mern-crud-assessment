@@ -26,9 +26,24 @@ router.get("/getAll", (req, res) => {
             res.status(200).json(items).end();
         }
 	})
-	.catch(err => res.status(404).json({Error:"There are no items."}).end());
+	.catch(() => res.status(404).json({Error:"There are no items."}).end());
 });
 
+// @route   POST item/get
+// @desc    Get an item
+// @access  Public
+router.post("/get", (req, res) => {
+    Item.find({_id : req.body._id}, '-email')
+	.then(item => {
+		if (item === undefined || item.length == 0) {
+			errors.noItems = "There are no items with that id";
+			res.status(404).json({Error:"There are no items with that id."}).end();
+		} else {
+            res.status(200).json(item).end();
+        }
+	})
+	.catch(() => res.status(404).json({Error:"There are no items with that id"}).end());
+});
 
 // @route   POST item/add
 // @desc    Add a new item to the database

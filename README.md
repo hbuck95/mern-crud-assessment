@@ -162,7 +162,10 @@ However, if your username was invalid or the email address/password didn't corre
 ```
 
 ## Retrieving Items
-To retrieve items GET requests must be sent, to get everything a request is simply sent to the getAll endpoint:
+To retrieve items POST/GET requests must be sent, this application has 2 implemented methods to retrieve items: getting a single item, and getting every item in the database.
+
+### Get Everything
+In order to get everything a request is simply sent to the getAll endpoint:
 ```
 curl http://localhost:5000/item/getAll
 ```
@@ -172,8 +175,33 @@ This will return every item within database (the content and the username of the
 [{"_id":"5d3af5074103847053d19628","username":"Fred","content":"Hello world!","__v":0}]
 ```
 
+### Get A Single Item
+Unlike retrieving all the items, when getting a single item the request is a POST-type rather than GET. This is because data must be sent to the server, this could be done via parameters in a GET request however we are sending them in the requests body which is not a networking standard for GET requests.
+
+In order to get an item we have to provide the items id, in our getAll example above we retrieve the item we created earlier which had an id of: *5d3af5074103847053d19628*
+
+Our POST request to get this item will be:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"YOUR_ID"}' -X POST http://localhost:5000/item/get
+```
+
+e.g:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"5d3acfc2c62d152617dd8a97"}' -X POST http://localhost:5000/item/get
+```
+
+The server will respond with your item, for our example item that looks like:
+```
+[{"_id":"5d3af5074103847053d19628","username":"Fred","content":"Hello world!","__v":0}]
+```
+
+If the provided item id doesn't match a stored item the response will instead be:
+```
+{"Message":"There are no items with that id"}
+```
+
 ## Updating Items
-When updating items we also need the id of the item we're updating, this can be accessed by running the getAll request as show above. In our example the id of the item was: *5d3af5074103847053d19628*
+When updating items we also need the id of the item we're updating, this can be accessed by running the getAll request as show above. 
 
 To update an item a PUT request must be sent with the username, email address, and password of the user who created it:
 ```
@@ -247,7 +275,7 @@ Run the following command:
 docker-compose down
 ```
 
-After several seconds a series of messages should print to the terminal showing the containers being stopped, it should look like this:
+After several seconds a series of messages should print to the terminal showing the containers being stopped, it should look like this:\
 ![Stopping the Application](https://i.imgur.com/7TG6tMV.png)
 
 The application is now stopped.
