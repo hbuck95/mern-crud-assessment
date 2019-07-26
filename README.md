@@ -6,6 +6,13 @@
 2a. [Cloning this Repository](https://github.com/hbuck95/mern-crud-assessment#cloning-this-repository)\
 2b. [Installing Docker and docker-compose](https://github.com/hbuck95/mern-crud-assessment#installing-docker-and-docker-compose)\
 2c. [Starting the Application](https://github.com/hbuck95/mern-crud-assessment#starting-the-application)
+3. [Using the Application](https://github.com/hbuck95/mern-crud-assessment#using-the-application)\
+3a. [Creating a New User](https://github.com/hbuck95/mern-crud-assessment#creating-a-new-user)\
+3b. [Login with your New User](https://github.com/hbuck95/mern-crud-assessment#login-with-your-new-user)
+3c. [Creating Items](https://github.com/hbuck95/mern-crud-assessment#creating-items)
+3d. [Retrieving Items](https://github.com/hbuck95/mern-crud-assessment#retrieving-items)
+3e. [Updating Items](https://github.com/hbuck95/mern-crud-assessment#updating-items)
+3f. [Deleting Items](https://github.com/hbuck95/mern-crud-assessment#deleting-items)
 
 # Running the Application
 
@@ -129,4 +136,13 @@ If your login details were incorrect you will be denied access to the account wi
 ```
 {"Error":"The username, email, or password entered does not match a username or password in our records."}
 ```
+
+## Creating Items
+
+
+## Retrieving Items
+
+## Updating Items
+
+## Deleting Items
 
