@@ -91,5 +91,48 @@ router.delete("/delete", (req,res) => {
   	
 });
 
+// @route   PUT item/delete
+// @desc    Update an item in the database
+// @access  Public
+router.put("/update", (req,res) => {
+
+    Item.findById(req.body._id).then(item => { 
+
+        User.findOne({username: item.username}).then(user => { 
+
+            if(user.email === req.body.email){
+
+                bcrypt.compare(req.body.password, user.password).then(ifMatch => {
+
+                    if(ifMatch){
+                        item.update({
+                            content: req.body.content
+                        },{
+                            useFindAndModify:false
+                        }).then(() =>{
+                            res.status(200).json({Message: "Item successfully updated."}).end();
+                        }).catch((err) =>{
+                            res.status(400).json({Error: err.message}).end();
+                        });
+                    } else {
+                        res.status(400).json({Error:"The username, email, or password entered does not match a set in our records."}).end();
+                    }	
+
+                });  
+
+            } else {
+                res.status(400).json({Error:"The username, email, or password entered does not match a set in our records."}).end();
+            }    
+
+        }).catch(() => {
+            res.status(400).json({Error:"The username, email, or password entered does not match a set in our records."}).end();
+        });      
+
+    }).catch(() => {
+        res.status(404).json({Error:"An item with the supplied ID could not be found."}).end();
+    }); 
+
+});
+
 
 module.exports = router;
