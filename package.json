@@ -1,0 +1,34 @@
+{
+  "name": "mern-crud-assessment",
+  "version": "1.0.0",
+  "description": "Mern assessment with crud functionalities",
+  "main": "server.js",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.6",
+    "validator": "^11.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hbuck95/mern-crud-assessment.git"
+  },
+  "keywords": [
+    "Merd",
+    "Node.js",
+    "Mongo",
+    "Crud"
+  ],
+  "author": "Harry Buck",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hbuck95/mern-crud-assessment/issues"
+  },
+  "homepage": "https://github.com/hbuck95/mern-crud-assessment#readme"
+}
