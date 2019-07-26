@@ -119,7 +119,7 @@ This will create a new user with the username 'Fred' and email address of 'fred@
 ## Login with your New User
 To login with your newly created user another post request is sent:
 ```
-curl -H "Content-Type: application/json" -d '{"username":"YOUR_USER", "email":"YOUR_EMAIL", "password":"YOUR_PASSWORD"}' -X POST http://localhost:5000/user/login
+curl -H "Content-Type: application/json" -d '{"username":"YOUR_USERNAME", "email":"YOUR_EMAIL", "password":"YOUR_PASSWORD"}' -X POST http://localhost:5000/user/login
 ```
 
 e.g:
@@ -138,11 +138,102 @@ If your login details were incorrect you will be denied access to the account wi
 ```
 
 ## Creating Items
+To create an item you must first have a user account, please complete the above two steps before continuing if not done so already.
 
+Items are created by send POST requests to the add endpoint in the item routes table, this is done using CURL as follows:
+```
+curl -H "Content-Type: application/json" -d '{"username":"YOUR_USERNAME", "email":"YOUR_EMAIL", "password":"YOUR_PASSWORD", "content":"YOUR_CONTENT"}' -X POST http://localhost:5000/item/add
+```
+
+e.g:
+```
+curl -H "Content-Type: application/json" -d '{"username":"Fred", "email":"fred@fred.com", "password":"password123", "content":"Hello world!"}' -X POST http://localhost:5000/item/add
+```
+
+If your POST request was successful the server will respond with:
+```
+{"Message":"Item added to DB."}
+```
+
+However, if your username was invalid or the email address/password didn't correspond to the provided username your request will be rejected:
+```
+{"Error":"The username or password entered does not match a username or password in our records."}
+```
 
 ## Retrieving Items
+To retrieve items GET requests must be sent, to get everything a request is simply sent to the getAll endpoint:
+```
+curl http://localhost:5000/item/getAll
+```
+
+This will return every item within database (the content and the username of the user who created it) with the exception of the users email address which is kept private, for our purposes we are also returning the id:
+```
+[{"_id":"5d3af5074103847053d19628","username":"Fred","content":"Hello world!","__v":0}]
+```
 
 ## Updating Items
+When updating items we also need the id of the item we're updating, this can be accessed by running the getAll request as show above. In our example the id of the item was: *5d3af5074103847053d19628*
+
+To update an item a PUT request must be sent with the username, email address, and password of the user who created it:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"YOUR_ID", "username":"YOUR_USERNAME", "email":"YOUR_EMAIL", "password":"YOUR_PASSWORD", "content":"YOUR_CONTENT"}' -X PUT http://localhost:5000/item/update
+```
+
+e.g:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"5d3af5074103847053d19628", "username":"Fred", "email":"fred@fred.com", "password":"password123", "content":"Goodbye world!"}' -X PUT http://localhost:5000/item/update
+```
+
+If successful, the server will respond:
+```
+{"Message":"Item successfully updated."}
+```
+
+If your provided credentials were incorrect the server will instead respond:
+```
+{"Error":"The username, email, or password entered does not match a set in our records."}
+```
+
+If the id provided was incorrect the server will also respond:
+```
+{"Error":"An item with the supplied ID could not be found."}
+```
+
+To check that your post updated successfully you can run the getAll request and you should see your new record content:
+
+Run the request:
+  ```
+  curl localhost:5000/item/getAll
+  ```
+Output:
+  ```
+  [{"_id":"5d3af5074103847053d19628","username":"Fred","content":"Goodbye world!","__v":0}]
+  ```
 
 ## Deleting Items
+To delete your item your id will be required again.
 
+Items are deleted as follows:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"YOUR_ID", "email":"YOUR_EMAIL", "password":"YOUR_PASSWORD"}' -X DELETE http://localhost:5000/item/delete
+```
+
+e.g:
+```
+curl -H "Content-Type: application/json" -d '{"_id":"5d3af5074103847053d19628", "email":"fred@fred.com", "password":"password123"}' -X DELETE http://localhost:5000/item/delete
+```
+
+If successful you will receive the following response from the server:
+```
+{"Message":"Item removed from DB."}
+```
+
+If your credentials are incorrect the server will instead respond:
+```
+{"Error":"The username, email, or password entered does not match a set in our records."}
+```
+
+Or, if the id entered didn't match a record:
+```
+{"Error":"Couldn't find an item with the provided ID."}
+```
