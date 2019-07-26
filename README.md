@@ -13,6 +13,7 @@
 3d. [Retrieving Items](https://github.com/hbuck95/mern-crud-assessment#retrieving-items)\
 3e. [Updating Items](https://github.com/hbuck95/mern-crud-assessment#updating-items)\
 3f. [Deleting Items](https://github.com/hbuck95/mern-crud-assessment#deleting-items)
+4. [Stop the Application](https://github.com/hbuck95/mern-crud-assessment#stop-the-application)
 
 # Running the Application
 
@@ -237,3 +238,16 @@ Or, if the id entered didn't match a record:
 ```
 {"Error":"Couldn't find an item with the provided ID."}
 ```
+
+# Stop the Application
+Once you are done using the application it can be stopped by running a docker command which will automatically bring down all the services started earlier.
+
+Run the following command:
+```
+docker-compose down
+```
+
+After several seconds a series of messages should print to the terminal showing the containers being stopped, it should look like this:
+![Stopping the Application](https://i.imgur.com/7TG6tMV.png)
+
+The application is now stopped.
