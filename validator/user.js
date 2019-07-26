@@ -11,11 +11,19 @@ module.exports = function validateItem(user) {
     }
 
     if(Validator.isEmpty(user.email)){
-        errors.username = "A email address is required.";
+        errors.email = "A email address is required.";
+    }
+
+    if(Validator.isEmpty(user.password)){
+        errors.password = "A password is required.";
     }
 
     if(!Validator.isAlphanumeric(user.username, "en-GB")){
         errors.username = "Usernames can only contain letters or numbers.";
+    }
+
+    if(!Validator.isEmail(user.email)){
+        errors.email = "A valid email address must be supplied.";
     }
 
     return {
