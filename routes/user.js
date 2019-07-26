@@ -6,12 +6,18 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const encrypt = require("../encryption/encrypt");
 
+
+// @route   GET user/test
+// @desc    Send a test message to the client
+// @access  Public
 router.get("/test", (req, res) => res.json({"message": "This is a test message"}));
 
-router.post("/register", (req, res) => {
 
+// @route   POST user/register
+// @desc    Add a new users details to the database
+// @access  Public
+router.post("/register", (req, res) => {
     let validation = validateUser(req.body);
-    //let v = 0;
     
 	if(!validation.isValid)
         return res.status(400).json(validation.errors).end();
@@ -41,6 +47,9 @@ router.post("/register", (req, res) => {
     }).catch(err => console.log(err));        
 });
 
+// @route   POST user/login
+// @desc    Allow users to login to their accounts
+// @access  Public
 router.post("/login", (req, res) => {
     User.findOne({username: req.body.username}).then(user => {        
         bcrypt.compare(req.body.password, user.password).then(ifMatch => {
