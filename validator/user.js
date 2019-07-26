@@ -5,14 +5,16 @@ module.exports = function validateItem(user) {
     let errors = {};
 
     user.username = !isEmpty(user.username) ? user.username : "";
+    user.password = !isEmpty(user.password) ? user.password : "";
     user.repeatPassword = !isEmpty(user.repeatPassword) ? user.repeatPassword : "";
+    user.email = !isEmpty(user.email) ? user.email : "";
 
     if(Validator.isEmpty(user.username)){
         errors.username = "A username is required.";
     }
 
     if(Validator.isEmpty(user.email)){
-        errors.email = "A email address is required.";
+        errors.email = "A email address is requiyred.";
     }
 
     if(Validator.isEmpty(user.password)){
