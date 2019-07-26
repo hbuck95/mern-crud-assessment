@@ -247,7 +247,7 @@ Run the following command:
 docker-compose down
 ```
 
-After several seconds a series of messages should print to the terminal showing the containers being stopped, it should look like this:
+After several seconds a series of messages should print to the terminal showing the containers being stopped, it should look like this:\
 ![Stopping the Application](https://i.imgur.com/7TG6tMV.png)
 
 The application is now stopped.
