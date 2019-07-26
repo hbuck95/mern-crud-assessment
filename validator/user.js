@@ -5,6 +5,7 @@ module.exports = function validateItem(user) {
     let errors = {};
 
     user.username = !isEmpty(user.username) ? user.username : "";
+    user.repeatPassword = !isEmpty(user.repeatPassword) ? user.repeatPassword : "";
 
     if(Validator.isEmpty(user.username)){
         errors.username = "A username is required.";
@@ -16,6 +17,10 @@ module.exports = function validateItem(user) {
 
     if(Validator.isEmpty(user.password)){
         errors.password = "A password is required.";
+    }
+
+    if(!Validator.equals(user.password, user.repeatPassword)){
+        errors.password = "Your entered passwords do not match.";
     }
 
     if(!Validator.isAlphanumeric(user.username, "en-GB")){
