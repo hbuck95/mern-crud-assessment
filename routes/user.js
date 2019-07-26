@@ -51,16 +51,21 @@ router.post("/register", (req, res) => {
 // @desc    Allow users to login to their accounts
 // @access  Public
 router.post("/login", (req, res) => {
-    User.findOne({username: req.body.username}).then(user => {        
-        bcrypt.compare(req.body.password, user.password).then(ifMatch => {
-			if(ifMatch){
-				res.status(200).json({Message: "You have successfully logged in."});
-			} else {
-				res.status(400).json({Error:"The username or password entered does not match a username or password in our records."});
-			}			
-		});        
+    User.findOne({username: req.body.username}).then(user => {
+        
+        if(req.body.email === user.email){
+            bcrypt.compare(req.body.password, user.password).then(ifMatch => {
+    			if(ifMatch){
+			    	res.status(200).json({Message: "You have successfully logged in."}).end();
+			    } else {
+    				res.status(400).json({Error:"The username, email, or password entered does not match a username or password in our records."}).end();
+			    }			
+		    });  
+        } else {
+            res.status(400).json({Error:"The username, email, or password entered does not match a username or password in our records."}).end();
+        }              
     }).catch(() => {
-        res.status(400).json({Error:"The username or password entered does not match a username or password in our records."});
+        res.status(400).json({Error:"The username, email, or password entered does not match a username or password in our records."}).end();
     });
 });
 

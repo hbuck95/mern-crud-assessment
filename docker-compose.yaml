@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+    server:
+        image: hbuck/mern-server:v1
+        build:
+            context: .
+        ports:
+            - target: 5000
+              published: 5000
+              protocol: tcp
+        depends_on:
+            - mongo
+    mongo:
+        image: mongo:latest
+        ports:
+            - target: 27017
+              published: 27017
+              protocol: tcp
+
+
