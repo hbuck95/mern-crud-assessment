@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const validateUser = require("../validator/user");
+const bcrypt = require("bcryptjs");
 
 const User = require("../models/user");
 const encrypt = require("../encryption/encrypt");
@@ -25,5 +26,18 @@ router.post("/register", (req, res) => {
     
 });
 
+router.post("/login", (req, res) => {
+    User.findOne({username: req.body.username}).then(user => {        
+        bcrypt.compare(req.body.password, user.password).then(ifMatch => {
+			if(ifMatch){
+				res.status(200).json({Message: "You have successfully logged in."});
+			} else {
+				res.status(400).json({Error:"The username or password entered does not match a username or password in our records."});
+			}			
+		});        
+    }).catch(() => {
+        res.status(400).json({Error:"The username or password entered does not match a username or password in our records."});
+    });
+});
 
 module.exports = router;
