@@ -86,7 +86,7 @@ router.delete("/delete", (req,res) => {
         });      
 
     }).catch(() => {
-        res.status(400).json({Error:"The username, email, or password entered does not match a set in our records."}).end();
+        res.status(400).json({Error:"Couldn't find an item with the provided ID."}).end();
     }); 
   	
 });
